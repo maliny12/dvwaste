@@ -1,11 +1,27 @@
-Package: dvpw
-Title: Data Visualisation of Plastic Waste
+Package: dvwaste
+Title: Data Visualisation of Plastic Waste Data
 Version: 0.0.0.9000
 Authors@R: 
-    person("Maliny", "Po", , "po0007@monashemail.com", role = c("aut", "cre"))
+    person("Maliny", "Po", , "po0007@student.monash.com.au", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: What the package does (one paragraph).
-License: MIT + file LICENSE
+License: `mit_license()`, `gpl3_license()`
 Encoding: UTF-8
-Language: es
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
+Depends: 
+    R (>= 2.10)
+LazyData: true
+Suggests: 
+    broom,
+    ggpattern,
+    ggplot2,
+    ggplotly,
+    knitr,
+    mapproj,
+    maptools,
+    rmarkdown,
+    shiny,
+    sp,
+    tidyverse
+VignetteBuilder: knitr
