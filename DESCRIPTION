@@ -1,8 +1,8 @@
-Package: change-this-to-your-pkg-name
-Title: What the Package Does (One Line, Title Case)
+Package: dvpw
+Title: Data Visualisation of Plastic Waste
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "your@email.com", role = c("aut", "cre"))
+    person("Maliny", "Po", , "po0007@monashemail.com", role = c("aut", "cre"))
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
 Encoding: UTF-8
