@@ -1,17 +1,16 @@
-#' Global Plastic Waste Dataset
+#' Global Plastic Waste
 #'
-#' A dataset that contains the agricultural yields across crop types and by
-#' entity from 1960 to 2018.
+#' A dataset combining coast_waste_10 (Annual Mismanaged Plastic Waste), mismanaged_gdp_10 (Daily Per Capita Mismanaged Plastic Waste), and waste_gdp_10 (Daily Per Capita Plastic Waste).
 #'
-#' @format A data frame with 143,825 rows and 5 variables.
+#'
+#' @format A data frame with 282 rows and 4 variables.
 #' \describe{
-#'   \item{entity}{Country or region name}
-#'   \item{code}{Country code (NA for regions or continents)}
-#'   \item{year}{Year}
-#'   \item{crop}{Crop type}
-#'   \item{yield}{Yield in tonnes_per_hectare}
+#'   \item{Entity}{Country or region name}
+#'   \item{Mismanaged_Waste}{Tonnes of mismanaged plastic waste.}
+#'   \item{Daily_Mismanaged_Waste}{Amount of mismanaged plastic waste per capita in kg/day.}
+#'   \item{Daily_Plastic_Waste}{Amount of plastic waste per capita in kg/day.}
 #' }
-#' @source \url{https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-01/key_crop_yields.csv}
+#' @source \url{https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-05-21#coast_vs_waste.csv}
 
 
 "global_plastic_waste"

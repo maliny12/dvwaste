@@ -1,4 +1,3 @@
-## code to prepare `coast_waste_10` dataset goes here
 library(tidyverse)
 
 # load the Coast_vs_waste data

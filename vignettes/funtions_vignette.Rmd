@@ -1,0 +1,102 @@
+---
+title: "Available Functions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Available Functions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  message = FALSE
+)
+```
+
+```{r setup}
+library(tidyverse)
+library(dvwaste)
+```
+
+## Parameterised Bar Chart Function
+
+This funtion is designed to filter and process data from the `coast_waste_10` dataset for specific countries, resulting in a tibble that can be used to create a bar chart. To use this feature, you must provide a single parameter in the form of a list or vector that contains the names of all selected countries. 
+
+```
+# usage
+dvwaste::param_barchart(country_list = character(0))
+
+```
+Each element in the country list must match an entry in the 'Entity' column from the coast_waste_10 dataset. If you leave this parameter empty, data for all valid countries will be included by default. The output of this feature is a table with two columns: "Entity" (country names) and "Value" (mismanaged plastic waste in tonnes).
+
+```
+# A list of all available countries in the dataset
+dvwaste::coast_waste_10$Entity
+
+```
+<details>
+  <summary><i>See the full country list</i></summary>
+
+```{r}
+# A list of all available countries in the dataset
+dvwaste::coast_waste_10$Entity
+```
+  </details>
+#### Examples
+
+```{r}
+
+# select multiple countries
+input_countries <- c("Bahamas", "Australia", "United States")
+param_barchart(input_countries)
+
+# Use default country_list value, return a table with all countries
+param_barchart()
+```
+
+## Summary_Statistics_Function
+
+This function summarizes either character/factor or numeric data, providing frequency, proportion, cumulative frequency, and other statistics based on the input type. It takes a numeric, character, or factor vector as argument. The funtion returns a data frame with statistics such as frequency, proportion, cumulative frequency, and other summary measures, depending on the input type.
+
+When the input is a numerical vector, the function generates a table containing 5 summary descriptions, including the Mean, Median, SD, and N_Sample. On the other hand, if a character or factor vector is input, the function calculates the Frequency, Cumulative_Frequency, Proportion, and Cumulative_Proportion. The output for a character or vector input will be presented in a tidy format.
+
+```
+# usage
+# @param x : A numeric, character, or factor vector.
+dvwaste::descriptive_stats(x)
+
+```
+
+#### Examples
+
+```{r}
+library(tidyverse)
+library(dvwaste)
+
+# Example with a factor
+factor_input <- factor(c("A", "B", "A", "C", "B"))
+descriptive_stats(factor_input)
+
+# Example with a character vector
+character_input <- c("A", "B", "A", "C", "B")
+descriptive_stats(character_input)
+
+# Example with a numeric vector
+numeric_input <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+descriptive_stats(numeric_input)
+```
+
+### Reference 
+
+**Tidyverse**
+Wickham H, Averick M, Bryan J, Chang W, McGowan LD, François R, Grolemund G, Hayes A, Henry L, Hester
+  J, Kuhn M, Pedersen TL, Miller E, Bache SM, Müller K, Ooms J, Robinson D, Seidel DP, Spinu V,
+  Takahashi K, Vaughan D, Wilke C, Woo K, Yutani H (2019). “Welcome to the tidyverse.” _Journal of Open
+  Source Software_, *4*(43), 1686. doi:10.21105/joss.01686 <https://doi.org/10.21105/joss.01686>.
+  
+
+
+
+

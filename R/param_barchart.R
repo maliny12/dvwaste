@@ -1,4 +1,4 @@
-#' @title Paramised Bar Chart Funtion
+#' @title Parameterised Bar Chart Function
 #'
 #' @description
 #' This function This feature filters and processes data from the 'coast_waste_10'
@@ -6,8 +6,11 @@
 #'
 #' @usage param_barchart(country_list = character(0))
 #'
-#' @param country_list : A list/ vector of selected country. Country element must exist as an entry in
-#' `coast_waste_10`' **Entity** column. If left empty (default), data for all valid countries will be included.
+#' @param country_list : A list/ vector of selected country.
+#'
+#' @details
+#' Country element in the country_list must exist as an entry in Entity column from coast_waste_10 data set If left empty (default), data for all valid countries will be included.
+#'
 #'
 #' # List of available `Entity` in coast_waste_10
 #' available_countries <- coast_waste_10$Entity
@@ -17,6 +20,9 @@
 #'  and "Value" (Mismanaged plastic waste in tonnes)
 #'
 #' @examples
+#' library(tidyverse)
+#' library(dvwaste)
+#'
 #' # select multiple countries
 #' input_countries <- c("Bahamas", "Australia", "United States")
 #' param_barchart(input_countries)

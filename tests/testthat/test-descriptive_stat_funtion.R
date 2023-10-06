@@ -2,9 +2,8 @@
 library(testthat)
 library(tidyverse)
 
-library(testthat)
 
-describe("Testing descriptive_stats function", {
+describe("Testing for descriptive_stats function", {
 
   it("should return a dataframe with expected columns for character/factor input ", {
     # Arrange
@@ -61,6 +60,5 @@ describe("Testing descriptive_stats function", {
     expect_error(descriptive_stats(input), "Input should be a numerical vector with more than 5 values.")
   })
 
-  # Add more test cases as needed
 })
 

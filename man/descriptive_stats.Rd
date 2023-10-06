@@ -19,6 +19,9 @@ frequency, proportion, cumulative frequency, and other statistics based on the
 input type.
 }
 \examples{
+library(tidyverse)
+library(dvwaste)
+
 # Example with a factor
 factor_input <- factor(c("A", "B", "A", "C", "B"))
 descriptive_stats(factor_input)

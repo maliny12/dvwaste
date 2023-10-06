@@ -13,6 +13,9 @@
 #' cumulative frequency, and other summary measures, depending on the input type.
 #'
 #' @examples
+#' library(tidyverse)
+#' library(dvwaste)
+#'
 #' # Example with a factor
 #' factor_input <- factor(c("A", "B", "A", "C", "B"))
 #' descriptive_stats(factor_input)

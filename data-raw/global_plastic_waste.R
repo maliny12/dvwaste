@@ -1,5 +1,3 @@
-## code to prepare `Global Plastic Waste` dataset goes here
-
 # load the Coast_vs_waste data
 # This data is Mismanaged waste in ton, by country
 coast_vs_waste <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-05-21/coastal-population-vs-mismanaged-plastic.csv")

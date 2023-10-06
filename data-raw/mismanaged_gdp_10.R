@@ -1,5 +1,3 @@
-## code to prepare `mismanaged_gdp_10` dataset goes here
-
 # Load the mismanaged_vs_gdp
 # This data is per-capital mismanaged wasted
 mismanaged_vs_gdp <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-05-21/per-capita-mismanaged-plastic-waste-vs-gdp-per-capita.csv")

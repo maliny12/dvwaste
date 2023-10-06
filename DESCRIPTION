@@ -3,29 +3,26 @@ Title: Global Plastic Waste Data Analysis and Visualisation
 Version: 0.0.0.9000
 Authors@R: 
     person("Maliny", "Po", , "po0007@student.monash.com.au", role = c("aut", "cre"))
-Description: (What my package does)
-License: `mit_license()`
+Description: Launch a Shiny App, load plastic pollution datasets and provide relevant functions to explore plastic pollution issues.
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Depends: 
     R (>= 2.10)
 LazyData: true
+Imports:
+    tidyverse,
+    ggplot2
 Suggests: 
     broom,
     ggpattern,
-    ggplot2,
     ggplotly,
     knitr,
-    mapproj,
-    maptools,
     rmarkdown,
+    mapproj,
     shiny,
     sp,
     testthat (>= 3.0.0),
-    tidyverse
 VignetteBuilder: knitr
 Config/testthat/edition: 3
-
-
-

@@ -1,15 +1,15 @@
-# Total Waste produced by country with Coast in 2010
-#
-# A dataset that contains the agricultural yields across crop types and by
-# entity from 1960 to 2018.
-#
-# @format A data frame with 143,825 rows and 5 variables.
-# \describe{
-#   \item{entity}{Country or region name}
-#   \item{code}{Country code (NA for regions or continents)}
-#   \item{year}{Year}
-#   \item{crop}{Crop type}
-#   \item{yield}{Yield in tonnes_per_hectare}
-# }
-# @source \url{https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-01/key_crop_yields.csv}
+#' Annual Mismanaged Plastic Waste
+#'
+#' This dataset provides an annual estimate of plastic discharge in the year 2010. It is worth noting that this
+#' figure for each nation does not encompass waste exported abroad, which could have a higher likelihood of
+#' ending up in the ocean.
+#'
+#' @format A data frame with 186 rows and 2 variables.
+#' \describe{
+#'   \item{Entity}{Country or region name}
+#'   \item{Mismanaged plastic waste (tonnes)}{Tonnes of mismanaged plastic waste.}
+#' }
+#'
+#' @source \url{https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-05-21#coast_vs_waste.csv}
+
 "coast_waste_10"

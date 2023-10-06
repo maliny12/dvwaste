@@ -48,11 +48,13 @@ dvwaste::run_app()
 
 In the app's Interactive Map section, you can see plastic waste data in an interactive map format. Here's how to use it:
 
--   Map Display: The map is at the center of the screen. You can interact with it to explore data. Data Type Selection: Use the `Select Data Type` dropdown to pick the data type you want to see. You can choose from **Per capita plastic waste**, **Per capita mismanaged plastic waste**, or **Mismanaged waste in tons by country**.
+-   Map Display: The map is at the center of the screen. You can interact with it to explore data. 
 
--   Region Selection: Choose a region from the `Select Region` dropdown menu to focus on specific geographic areas. Options include **World**, **North America**, **Europe**, **Oceania**, **Asia**, **South America**, and **Africa**.
+- Data Type Selection: Use the `Select Data Type` dropdown to pick the data type you want to see. You can choose from **Per capita plastic waste**, **Per capita mismanaged plastic waste**, or **Mismanaged waste in tons by country**.
 
--   Country Selection: If you want to view data for specific countries, use the `Select countries` input box to choose one or more countries from the list. This lets you compare data for multiple countries.
+-   Region Selection: Choose a region from the `Select Region` dropdown menu to focus on specific geographic areas of the map. Options include **World**, **North America**, **Europe**, **Oceania**, **Asia**, **South America**, and **Africa**.
+
+-   Country Selection: If you want to view data for specific countries, use the `Select countries` input box to choose one or more countries from the list. This lets you compare data for multiple countries. The result will be plotted on the bar chart. 
 
 You can drag and move the control panel as needed for a better view. The data on the map and bar chart will automatically update based on your selections.
 
@@ -60,9 +62,6 @@ You can drag and move the control panel as needed for a better view. The data on
 ```{r, results='hold', echo= FALSE}
 knitr::include_graphics("../man/figures/interactive_map.png")
 ```
-3r
-
-
 
 ### Data Explorer
 
@@ -73,6 +72,50 @@ In this section, you can learn more about the purpose of the app and its creator
 #### Project Description
 
 Our project description provides a comprehensive overview of the global plastic pollution crisis. You can read about the harmful effects of plastic pollution on the environment, oceans, and future generations. Additionally, the blog post by Maliny Po delves deeper into this issue, highlighting the urgent need for effective waste management systems.
+
+### References 
+
+**Tidyverse**
+Wickham H, Averick M, Bryan J, Chang W, McGowan LD, François R, Grolemund G, Hayes A, Henry L, Hester
+  J, Kuhn M, Pedersen TL, Miller E, Bache SM, Müller K, Ooms J, Robinson D, Seidel DP, Spinu V,
+  Takahashi K, Vaughan D, Wilke C, Woo K, Yutani H (2019). “Welcome to the tidyverse.” _Journal of Open
+  Source Software_, *4*(43), 1686. doi:10.21105/joss.01686 <https://doi.org/10.21105/joss.01686>.
+  
+**ggplot2**
+H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016.
+
+**ggpattern**
+FC M, Davis T, ggplot2 authors (2023). _ggpattern: 'ggplot2' Pattern Geoms_.
+  https://github.com/coolbutuseless/ggpattern,
+  https://coolbutuseless.github.io/package/ggpattern/index.html.
+  
+**plotly**
+C. Sievert. Interactive Web-Based Data Visualization with R, plotly, and shiny. Chapman and Hall/CRC
+  Florida, 2020.
+  
+**sp**
+Pebesma E, Bivand R (2005). “Classes and methods for spatial data in R.” _R News_, *5*(2), 9-13.
+  <https://CRAN.R-project.org/doc/Rnews/>.
+
+  Bivand R, Pebesma E, Gomez-Rubio V (2013). _Applied spatial data analysis with R, Second edition_.
+  Springer, NY. <https://asdar-book.org/>.
+  
+**broom**
+Robinson D, Hayes A, Couch S (2023). _broom: Convert Statistical Objects into Tidy Tibbles_. R
+  package version 1.0.5, <https://CRAN.R-project.org/package=broom>.
+  
+**shiny**
+Chang W, Cheng J, Allaire J, Sievert C, Schloerke B, Xie Y, Allen J, McPherson J, Dipert A, Borges B
+  (2023). _shiny: Web Application Framework for R_. R package version 1.7.5,
+  <https://CRAN.R-project.org/package=shiny>.
+  
+**mapproj**
+Brownrigg DMPfRbR, Minka TP, Bivand. ttP9cbR (2023). _mapproj: Map Projections_. R package version
+  1.2.11, <https://CRAN.R-project.org/package=mapproj>.
+  
+
+
+  
 
 
 

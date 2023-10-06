@@ -16,7 +16,6 @@ library(tidyverse)
 library(ggpattern)
 library(plotly) # For interactive plot
 library(sp) # For maptools package
-library(maptools) # For regional map
 library(broom) # For tidying the data
 library(shiny) # For R-Shiny
 library(mapproj) # For Coord_map() function
@@ -152,6 +151,7 @@ barchart <- function(coast_waste_10, country_list) {
     geom_col() +
     theme(legend.position = "Top") +
     labs(x = " ", y = "", title = "Mismanaged plastic waste (tons)") +
+    scale_y_discrete(labels = function(y) str_wrap(y, width = 10)) +
     theme_classic()
 
   barchart_plotly <- ggplotly(barchart, tooltip = "text") %>%
@@ -268,7 +268,7 @@ server <- function(input, output) {
     if (length(input$countries) > 0) {
       country_list <- input$countries
     } else {
-      country_list <- c("China", "Australia", "USA")
+      country_list <- c("Canada", "Australia", "Sweden")
     }
     plot <- barchart(coast_waste_10, country_list)  # Call your barchart function
     plot
