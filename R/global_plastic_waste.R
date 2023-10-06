@@ -1,5 +1,4 @@
-#' Total Waste vs. GDP, in 2010.
-#' Key crop yields
+#' Global Plastic Waste Dataset
 #'
 #' A dataset that contains the agricultural yields across crop types and by
 #' entity from 1960 to 2018.
@@ -14,4 +13,5 @@
 #' }
 #' @source \url{https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-01/key_crop_yields.csv}
 
-"waste_gdp_10"
+
+"global_plastic_waste"

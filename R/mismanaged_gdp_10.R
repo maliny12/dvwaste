@@ -1,4 +1,4 @@
-# Key crop yields
+# Mismanaged Waste vs. GDP, in 2010.
 #
 # A dataset that contains the agricultural yields across crop types and by
 # entity from 1960 to 2018.
@@ -12,4 +12,5 @@
 #   \item{yield}{Yield in tonnes_per_hectare}
 # }
 # @source \url{https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-01/key_crop_yields.csv}
-"mismanaged_gdp_10.R"
+
+"mismanaged_gdp_10"

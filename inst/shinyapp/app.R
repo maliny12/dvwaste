@@ -27,15 +27,15 @@ library(dvwaste)
 
 # Create a function that return a heat map based on user's selection
 # Parameters:
-# df : Data frame containing all 3 datasets (waste_gdp_10, mismanaged_gdp_10, and coast_waste_10)
+# global_plastic_waste: Data frame containing all 3 datasets (waste_gdp_10, mismanaged_gdp_10, and coast_waste_10)
 # column_name : User selection for data type
 # region : User selection for region
 # It returns an interactive heat map based on selected data set
 
-heatmap <- function(df, column_name, region) {
+heatmap <- function(global_plastic_waste, column_name, region) {
 
   # Select only the data that the user has selected to view
-  plot_df <- df %>%
+  plot_df <- global_plastic_waste %>%
     select(Entity, {{column_name}}) %>%
     rename(value = {{column_name}}, region = Entity)
 
@@ -259,7 +259,7 @@ server <- function(input, output) {
   output$heatmap_plot <- renderPlotly({
     column_name <- input$column_name  # Use appropriate input value
     region <- input$region  # Use appropriate input value
-    plot <- heatmap(df, column_name, region)  # Call your heatmap function
+    plot <- heatmap(global_plastic_waste, column_name, region)  # Call your heatmap function
     plot
   })
 

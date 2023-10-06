@@ -1,11 +1,10 @@
 Package: dvwaste
-Title: Data Visualisation of Plastic Waste Data
+Title: Global Plastic Waste Data Analysis and Visualisation 
 Version: 0.0.0.9000
 Authors@R: 
-    person("Maliny", "Po", , "po0007@student.monash.com.au", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `mit_license()`, `gpl3_license()`
+    person("Maliny", "Po", , "po0007@student.monash.com.au", role = c("aut", "cre"))
+Description: (What my package does)
+License: `mit_license()`
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
@@ -23,5 +22,10 @@ Suggests:
     rmarkdown,
     shiny,
     sp,
+    testthat (>= 3.0.0),
     tidyverse
 VignetteBuilder: knitr
+Config/testthat/edition: 3
+
+
+

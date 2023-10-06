@@ -1,4 +1,4 @@
-## code to prepare `df` dataset goes here
+## code to prepare `Global Plastic Waste` dataset goes here
 
 # load the Coast_vs_waste data
 # This data is Mismanaged waste in ton, by country
@@ -38,11 +38,11 @@ mismanaged_gdp_10$Entity[mismanaged_gdp_10$Entity == "United Kingdom"] <- "UK"
 
 
 # Row bind all 3 datasets
-df <- left_join(waste_gdp_10, mismanaged_gdp_10, by='Entity') %>%
+global_plastic_waste <- left_join(waste_gdp_10, mismanaged_gdp_10, by='Entity') %>%
   left_join(., coast_waste_10, by='Entity') %>%
   rename("Daily_Plastic_Waste" = `Per capita plastic waste (kilograms per person per day)` ,
          "Daily_Mismanaged_Waste" = `Per capita mismanaged plastic waste (kilograms per person per day)`,
          "Mismanaged_Waste" = `Mismanaged plastic waste (tonnes)`)
 
 
-usethis::use_data(df, overwrite = TRUE)
+usethis::use_data(global_plastic_waste, overwrite = TRUE)

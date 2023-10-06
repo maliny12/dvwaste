@@ -1,4 +1,4 @@
-# Key crop yields
+# Total Waste produced by country with Coast in 2010
 #
 # A dataset that contains the agricultural yields across crop types and by
 # entity from 1960 to 2018.
@@ -12,4 +12,4 @@
 #   \item{yield}{Yield in tonnes_per_hectare}
 # }
 # @source \url{https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-01/key_crop_yields.csv}
-"coast_waste_10.R"
+"coast_waste_10"

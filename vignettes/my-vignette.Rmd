@@ -1,8 +1,8 @@
 ---
-title: "my-vignette"
+title: "About the data"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{my-vignette}
+  %\VignetteIndexEntry{About the data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -10,10 +10,307 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE
 )
 ```
 
 ```{r setup}
+########## Load Library ##########
+library(ggplot2)# For plots
+library(tidyverse)
+library(ggpattern)
+library(plotly) # For interactive plot
+library(sp) # For maptools package
+library(broom) # For tidying the data
+library(shiny) # For R-Shiny
+library(forcats)
+library(wesanderson) # For color panel
+library(knitr) # for Kable function
 library(dvwaste)
+
+
+# Format the data
+coast_waste_10 <- coast_waste_10 %>%
+  rename("region"= Entity,
+         "value" = `Mismanaged plastic waste (tonnes)`)
+
+# Load the Waste_vs_gdp data
+# This data is per-capital plastic waste
+waste_gdp_10 <- waste_gdp_10  %>% 
+  rename("region"= Entity,
+         "value" = `Per capita plastic waste (kilograms per person per day)`)
+# Load the mismanaged_vs_gdp
+# This data is per-capital mismanaged wasted
+mismanaged_gdp_10 <- mismanaged_gdp_10 %>% # Keep only the relevant columns 
+  rename("region"= Entity,
+         "value" = `Per capita mismanaged plastic waste (kilograms per person per day)`)
+
+# Load the world map data
+world <- maps::map("world", fill=TRUE, plot=FALSE) %>%
+      maptools::pruneMap(xlim = c(-180,180), ylim = c(-60, 90)) %>%
+      tidy()
 ```
+
+"The world is producing twice as much plastic waste as two decades ago, with the bulk of it ending up in landfill, incinerated or leaking into the environment, and only 9% successfully recycled" - OECD Report.
+
+Plastic pollution is a global crisis rapidly spiralling out of control, leaving a detrimental mark on our environment, oceans, and future generations. While plastic is a versatile material that has transformed various industries, its disposal and mismanagement have resulted in dire consequences. The aim of this R package is to explore the global plastic pollution problem through a **Shiny App**, by examining how much each country produces, how much mismanaged waste is produced, and the urgent need for effective waste management systems, focusing on plastic emissions into the ocean.
+
+
+# About `dvwaste`
+
+The aim of this R package is to explore the global plastic pollution problem through a **Shiny App** and functions, by examining how much each country produces, how much mismanaged waste is produced. 
+
+- it has a shiny app, with the aims to make people more aware of the global plastic pollution problem, encourage discussions about the issue, and provide insights into which countries contribute the most to this environmental challenge. Users can interact with the app to explore the data and gain a better understanding of the magnitude of plastic waste generation and mismanagement around the world.
+
+- the package contains 3 datasets that are related to plastic waste and provide information on different aspects of plastic waste generation, mismanagement, and its relationship with GDP per capita for various countries.
+
+
+# Shiny App: Global Plastic Waste
+
+The "Global Plastic Pollution" R Shiny app is created with the goal of increasing awareness about the issue of plastic pollution on a global scale. This interactive app allows users to explore data related to plastic waste generation and mismanagement in an informative way. 
+
+To begin, the app loads data from the `dvwaste` package, containing information about plastic waste, mismanaged plastic waste, and GDP per capita for different countries. 
+
+The app features an interactive heatmap function that allows users to visualize different aspects of plastic waste data. Users can choose from three data types, which include per capita plastic waste, per capita mismanaged plastic waste, and mismanaged waste in ton by country. They can also select a specific region or view global data. 
+
+Additionally, the app provides a bar chart function that allows users to select specific countries and see their contributions to mismanaged plastic waste in tons. They can select one or more countries to visualize their data. Users can also explore a top 5 bar chart function displaying the top 5 contributors to mismanaged plastic waste in tons, based on their selection of data type and region. 
+
+The app's user interface includes navigation tabs for different sections, interactive controls to select data type, region, and countries, and a visually appealing display of heatmaps and charts. The "Data Explorer" page provides information about the app's purpose, a description of the data sources used, and a link to a blog post for further reading on plastic pollution. 
+
+Overall, the app is designed to raise awareness about the global plastic pollution problem, encourage discussions about this issue, and provide insights into which countries contribute the most to this environmental challenge. By interacting with the app, users can gain a better understanding of the magnitude of plastic waste generation and mismanagement worldwide. 
+
+```{r, eval=FALSE}
+# Command to launch the R-Shiny app
+dvwaste::run_app()
+```
+
+
+# Datasets 
+
+## Data Descriptions
+
+### Daily Per-Capita Plastic Waste
+
+
+
+### Daily Per-Capita Mismanaged Plastic Waste
+
+### Annual Mismanged Plastic Waste
+
+
+## Data Dictionary 
+
+
+## How much plastic waste does each country produce?
+
+```{r fig-heatmap, results='hold', fig.cap= "This measurement reflects the general per capita rate of plastic waste production before accounting for waste management, recycling, or incineration. Therefore, it does not directly indicate the potential risk of polluting waterways or marine environments."}
+
+# Join Coast_vs_waste data with the WorldMap data
+sub_map <- left_join(world , waste_gdp_10 , "region")
+
+#sub_map <- highlight_key(sub_map, ~region)
+
+heatmap <- ggplot(sub_map, tooltip = "text") +
+    geom_polygon(color = "#f2f2f2", size = 0.3,aes(x = long, y = lat,
+                                     fill = value, group = group,
+                                     text = paste(region, "<br>", value, "tons"))) +
+    scale_fill_continuous(low="skyblue", high="royalblue", trans = "sqrt",
+                          guide="colorbar", na.value = "#909090") +
+    theme(panel.background = element_rect(fill="#3f3f3f"),
+          axis.line=element_blank(),
+          axis.text.x=element_blank(),
+          axis.text.y=element_blank(),axis.ticks=element_blank(),
+          axis.title.x=element_blank(),
+          axis.title.y=element_blank(),
+          
+          #panel.border = element_rect(colour = "black", fill=NA, size=3),
+          panel.grid.major=element_blank(),
+          panel.grid.minor=element_blank(),
+          title = element_text(colour = "white"),
+          legend.title = element_text(size=10, color = "white"),
+          legend.text=element_text(color = "white") ) +
+    labs(fill="Kgs", title= "Per capita plastic waste (kilograms per person per day), in 2010.",
+         subtitle = "The heatmap illustrates the distribution of plastic waste produced 
+         per capita by each country in the year 2010.") +
+    coord_sf()
+
+# Create a plotly version of the heatmap 
+heatmap_plotly <- ggplotly(heatmap, tooltip = "text") 
+
+
+# Display the heatmap
+heatmap_plotly
+```
+
+In \@ref(fig:fig-heatmap) we observe the per-person daily plastic waste generation rate, measured in kilograms. In this data, there is a significant gap of roughly tenfold between the highest-ranking countries in terms of daily per capita plastic waste generation, which include Kuwait, Guyana, Germany, Netherlands, Ireland, the United States, and numerous other countries like India, Tanzania, Mozambique, and Bangladesh.
+
+It is important to note that these statistics indicate the total amount of plastic waste produced without factoring in variations in waste management, recycling, or incineration. Consequently, these numbers do not reflect the quantities of plastic that may end up in the ocean or other water bodies.
+
+In this section, we observed significant disparities in daily per capita plastic waste generation rates. However, these figures don't account for waste management. In next section, we'll explore the impact of mismanaged waste, especially in low-to-middle-income countries. 
+
+## How much of the plastic waste is mismanaged?
+
+```{r fig-barchart, echo=FALSE, fig.cap= "Mismanaged waste is highly susceptible to entering the ocean through wind or tidal transport or being carried to coastlines from inland waterways. It encompasses both littered waste and inadequately disposed of waste."}
+mismanged_waste_10 <- coast_waste_10 %>%
+  arrange(-value)%>%
+  head(10)
+
+barchart <- ggplot(mismanged_waste_10,
+                     aes(
+                       x = fct_reorder(region,value),
+                       y= value,
+                       fill = region,
+                       text = paste(region, "<br>", value, "tons")
+                       )
+                     ) +
+    geom_col() +
+    labs(x = " ", y = "",
+         title = "Top 10 countries that produced the most mismanaged plastic waste (tons), in 2010.",
+         subtitle = "This bar chart highlights the leading contributors to mismanaged plastic waste in 2010.") +
+    coord_flip()+
+    scale_fill_brewer(palette = "GnBu", direction = -1) +
+    theme_classic()
+
+plot_no_legend <- barchart + theme(legend.position="none",
+                                   axis.text.x=element_text(colour="white"),
+                                   axis.text.y=element_text(colour="white"),
+                                   title = element_text(colour = "white",
+                                                        size=9),
+                                   axis.line= element_line(colour="white"),
+                                   axis.ticks = element_line(colour="white")) 
+
+barchart_plotly <- ggplotly(plot_no_legend, tooltip = "text") %>%
+  layout(autosize = F, width = 800, height = 400)
+
+barchart_plotly
+```
+
+
+@ref(fig:fig-barchart) on the left illustrates the proportion of global mismanaged waste attributed to the top 10 countries. The per capita mismanaged waste in China is a staggering 23 times greater than that in the United Kingdom. When we consider the populations of each country, China, Indonesia, the Philippines, Vietnam, and Sri Lanka emerge as the top contributors to global mismanaged waste. Thus, Mismanaged waste produced in these countries is highly susceptible to entering the ocean through wind or tidal transport or being carried to coastlines from inland waterways.
+
+
+Plastic waste is at risk of reaching rivers and the ocean only when not adequately managed. In wealthier nations, nearly all of their plastic waste is either incinerated, recycled, or deposited in well-managed landfills, minimizing its exposure to the surrounding environment. Conversely, low-to-middle-income countries often need more robust waste management systems, leading to waste disposal outside designated landfills, which are frequently open and prone to leaking waste into the environment. Consequently, the prevalence of mismanaged waste is significantly higher in low-to-middle-income countries.
+
+As we've explored the global distribution of plastic contributions and the impact of mismanaged waste in this section, we now turn our attention to the crucial question: What percentage of the waste is emitted into the ocean? The next section delves into the intricate breakdown of global plastic emissions into the oceans and their regional distribution, shedding light on the significant role played by Asia, particularly the Philippines, in the plastic pollution crisis.
+
+## section
+
+The global distribution of plastic contributions is illustrated in @ref(fig:fig-heatmap2), showcasing the portion of worldwide plastic emissions attributed to each country. Recall per capita plastic waste generation from @ref(fig:fig-heatmap): The United States, Thailand, Germany and other Islander nations are among the top producers. However, the majority of these countries account for one of the lowest percentages of waste entering the ocean. This is due to efficient waste management systems and [waste export](https://ourworldindata.org/plastic-waste-trade) . However, it is essential to note that the data set does not account for export waste that has a greater chance of entering the ocean.
+
+@ref(fig:fig-barchart2) shows how global plastics emitted into the oceans break down by region. We can observe that Asia accounts for the majority of plastic waste emitted into the ocean at approximately 81%. With its rapid urbanization, rising middle class, and inadequate waste management system, Asia has become the [hot spot for plastic pollution](https://blogs.worldbank.org/eastasiapacific/turning-tide-plastic-pollution-through-regional-collaboration-southeast-asia).
+
+Notably, the Philippines represents over a third (36%) of plastic inputs. This statistic is expected since the Philippines hosts seven of the top ten rivers contributing to plastic pollution. This can be attributed to the country's geographical makeup, characterized by numerous small islands where a significant portion of the population resides along the coastlines.
+
+## Conclusion
+
+While plastic has revolutionized various industries with its versatility, its disposal and mismanagement have brought dire consequences. Our exploration of this issue has revealed significant disparities in daily per capita plastic waste generation among countries, highlighting the pressing need for effective waste management systems.
+
+The data also reveals a stark contrast between regions like Europe and North America, where most plastic waste is appropriately managed, and Asia, where inadequate waste management systems contribute to a higher prevalence of mismanaged waste. This disparity is a critical factor in understanding the global plastic pollution problem. However, it is essential to note that these statistics do not account for export waste, which may still pose a significant risk to the oceans.
+
+In light of these findings, nations worldwide should take immediate and comprehensive actions to address the plastic pollution crisis. Effective waste management, recycling initiatives, and international cooperation are essential steps towards mitigating the devastating impact of plastic on our planet and preserving it for future generations.
+
+## Shiny app
+
+The author developed a Shiny App to raise awareness of this problem and encourage conversations around this issue, all in an interactive and fun way. The link to the app can be found at [the Global Plastic Polution R-Shiny app](https://malinypo.shinyapps.io/Global_Plastic_Waste/) .
+
+
+## Dataset
+
+```{r}
+# Create a data frame for the data dictionary 
+
+# coast_vs_waste
+dc_coast_vs_waste <- data.frame(
+  Variable = c("Entity", "Code", "Year", "Mismanaged plastic waste (tonnes)", 
+               "Coastal population", "Total Population"),
+  Class = c("Character", "Character", "Integer (date)", "Double", "Double",
+            "Double"),
+  Description = c(
+    "Country Name",
+    "3 Letter country code",
+    "Year",
+    "Tonnes of mismanaged plastic waste.",
+    "Number of individuals living on/near coast.",
+    "Total population according to Gapminder."
+  )
+)
+
+# waste_vs_gdp
+dc_waste_vs_gdp <- data.frame(
+  Variable = c("Entity", "Code", "Year", "Per capita plastic waste (kg per person per day)", 
+               "GDP per capita", "Total Population"),
+  Class = c("Character", "Character", "Integer (date)", "Double", "Double",
+            "Double"),
+  Description = c(
+    "Country Name",
+    "3 Letter country code",
+    "Year",
+    "Amount of plastic waste per capita in kg/day.",
+    "GDP per capita constant 2011 international $, rate.",
+    "Total population according to Gapminder."
+  )
+)
+
+# mismanged_vs_gdp
+dc_mismanged_vs_gdp <- data.frame(
+  Variable = c("Entity", "Code", "Year", "Per capita mismanaged plastic waste (kg per person per day)", 
+               "GDP per capita", "Total Population"),
+  Class = c("Character", "Character", "Integer (date)", "Double", "Double",
+            "Double"),
+  Description = c(
+    "Country Name",
+    "3 Letter country code",
+    "Year",
+    "Amount of mismanaged plastic waste per capita in kg/day.",
+    "GDP per capita constant 2011 international $, rate.",
+    "Total population according to Gapminder."
+  )
+)
+
+```
+
+This blog utilised four datasets: coast_vs_waste.csv, mismanaged_vs_gdp.csv, waste_vs_gdp.csv, and share-of-global-plastic-waste-emitted-to-the-ocean, most of which are available on [TidyTuesday](https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-05-21#coast_vs_wastecsv). Share-of-global-plastic-waste-emitted-to-the-ocean dataset can be downloaded from [Our World in Data](https://ourworldindata.org/plastic-pollution).
+
+#### Coast_vs_waste
+
+```{r}
+kable(dc_coast_vs_waste)
+```
+
+-   `Coast_vs_waste` dataset provides an annual estimate of plastic discharge. It is worth noting that this figure for each nation does not encompass waste exported abroad, which could have a higher likelihood of ending up in the ocean.
+
+#### Waste_vs_gdp.csv
+
+```{r}
+kable(dc_waste_vs_gdp)
+```
+
+-   `Waste_vs_gdp.csv` dataset contains information on the daily amount of plastic waste generated per individual, measured in kilograms per person per day. This measurement reflects the general per capita rate of plastic waste production before accounting for waste management, recycling, or incineration. Therefore, it does not directly indicate the potential risk of polluting waterways or marine environments.
+
+#### Mismanaged_vs_gdp.csv
+
+```{r}
+kable(dc_mismanged_vs_gdp)
+```
+
+-   Finally in `mismanaged_vs_gdp.csv` dataset, mismanaged plastic waste refers to plastic that is either littered or improperly disposed of. The total for each country does not include waste shipped overseas, where it may also need to be appropriately managed.
+
+
+## References
+
+1. OECD, [Global plastic waste set to almost triple by 2060, says OECD](https://www.oecd.org/newsroom/global-plastic-waste-set-to-almost-triple-by-2060.htm)
+
+2. A. V. Trotsenburge and L. J. Hoi (2022) [Turning the tide on plastic pollution through regional collaboration in Southeast Asia](https://blogs.worldbank.org/eastasiapacific/turning-tide-plastic-pollution-through-regional-collaboration-southeast-asia)
+
+3. H. Ritchie, M. Roser, E. Mathieu, and B. Herre (2022), [Ocean plastics: How much do rich countries contribute by shipping their waste oversea. ](https://ourworldindata.org/plastic-waste-trade)
+
+## Data Sources
+
+*Coast_vs_waste* is available on: [TidyTuesday](https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-05-21#coast_vs_wastecsv)
+
+*Waste_vs_gdp* is available on: [TidyTuesday](https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-05-21#coast_vs_wastecsv)
+
+*Mismanaged_vs_gdp* is available on: [TidyTuesday](https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-05-21#coast_vs_wastecsv)
+
