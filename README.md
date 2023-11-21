@@ -6,7 +6,7 @@ Plastic pollution is a global crisis rapidly spiralling out of control, leaving 
 ### Installation
 
 ```
-devtools::install_github("etc5523-2023/dvwaste-maliny12")
+devtools::install_github("maliny12/dvwaste")
 ```
 
 ## Overview
